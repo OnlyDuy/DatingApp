@@ -13,7 +13,7 @@ export class NavComponent implements OnInit {
   constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {
-      
+    this.getCurrentUser();
   }
 
   login() {
@@ -26,7 +26,19 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
+    this.accountService.logout();
     this.loggedIn = false;
   }
 
+  // tạo 1 local để lưu người dùng hiện tại
+  getCurrentUser() {
+    // PHẤN NÀY LÀ ĐANG ĐĂNG KÝ DỊCH VỤ
+    // sau khi thiết lập được tài khoản đã lấy thì sẽ đặt trạng thái đăng nhập
+    // cho người dùng hiện tại 
+    this.accountService.currentUser$.subscribe(user => {
+      this.loggedIn = !!user;
+    }, error => {
+      console.log(error);
+    })
+  }
 }
