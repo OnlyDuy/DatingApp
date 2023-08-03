@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "font-awesome": "^4.7.0",
+    "ngx-font-awesome": "^1.0.0"
+  }
+}
