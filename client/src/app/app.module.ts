@@ -15,6 +15,7 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,9 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserAnimationsModule,
     FormsModule,
     BsDropdownModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toastr-bottom-right'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
