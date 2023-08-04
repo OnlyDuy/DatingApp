@@ -3,7 +3,7 @@ using API.Entites;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers 
+namespace API.Controllers
 {
     public class BuggyController : BaseApiController
     {
@@ -35,15 +35,14 @@ namespace API.Controllers
 
         // Xác thực kiểm tra lỗi dấu gạch ngang máy chủ
         [HttpGet("server-error")]
-        public ActionResult<string> GetServerError()
+        public ActionResult<string?> GetServerError()
         {
             var thing = _context.Users.Find(-1);
-            
-            var thingToReturn = thing != null ? thing.ToString() : "Thing is null";
 
-            if (thingToReturn == null) {
-                return NotFound();
-            }
+            if (thing == null) return NotFound();
+            // var thingToReturn = thing != null ? thing.ToString() : "Thing is null";
+
+            var thingToReturn = thing.ToString();
 
             return thingToReturn;
         }

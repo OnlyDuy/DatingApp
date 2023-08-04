@@ -2,6 +2,7 @@ using System.Text;
 using API.Data;
 using API.Extensions;
 using API.interfaces;
+using API.Middleware;
 using API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Gọi ngoại lệ từ phần mềm trung gian
+app.UseMiddleware<ExceptionMiddleware>();
 
 // khi cố gắng truy cập vào địa chỉ của http thì sẽ luôn trở thành https
 app.UseHttpsRedirection();
