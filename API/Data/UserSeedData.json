@@ -13,8 +13,8 @@
         "Country": "Comoros",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/women/36.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/women/36.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -32,8 +32,8 @@
         "Country": "Andorra",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/women/5.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/women/5.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -51,8 +51,8 @@
         "Country": "Sierra Leone",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/women/91.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/women/91.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -70,8 +70,8 @@
         "Country": "Uzbekistan",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/women/84.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/women/84.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -89,8 +89,8 @@
         "Country": "Malta",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/women/44.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/women/44.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -108,8 +108,8 @@
         "Country": "Vatican City State (Holy See)",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/men/20.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/men/20.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -127,8 +127,8 @@
         "Country": "Thailand",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/men/91.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/men/91.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -146,8 +146,8 @@
         "Country": "Bhutan",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/men/33.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/men/33.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -165,8 +165,8 @@
         "Country": "Zambia",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/men/61.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/men/61.jpg",
+                "IsMain": true
             }
         ]
     },
@@ -184,8 +184,8 @@
         "Country": "Anguilla",
         "Photos": [
             {
-                "url": "https://randomuser.me/api/portraits/men/16.jpg",
-                "isMain": true
+                "Url": "https://randomuser.me/api/portraits/men/16.jpg",
+                "IsMain": true
             }
         ]
     }

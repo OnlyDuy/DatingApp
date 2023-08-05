@@ -40,9 +40,9 @@ namespace API.Controllers
             var thing = _context.Users.Find(-1);
 
             // if (thing == null) return NotFound();
-            // var thingToReturn = thing != null ? thing.ToString() : "Thing is null";
+            var thingToReturn = thing != null ? thing.ToString() : "Thing is null";
 
-            var thingToReturn = thing.ToString();
+            // var thingToReturn = thing.ToString();
 
             return thingToReturn;
         }

@@ -8,12 +8,7 @@ namespace API.Extensions
     {
         public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration config)
         {
-            var tokenKey = config["TokenKey"];
-            if (tokenKey is null)
-            {
-                // Xử lý trường hợp TokenKey là null, ví dụ:
-                throw new InvalidOperationException("TokenKey is not configured in the appsettings.json");
-            }
+            var tokenKey = config["TokenKey"] ?? throw new InvalidOperationException("TokenKey is not configured in the appsettings.json");
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
