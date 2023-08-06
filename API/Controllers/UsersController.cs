@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+    [Authorize]
+    // Ủy quyền
     public class UsersController : BaseApiController
     {
         // Sử dụng dấu gạch dưới để có quyền truy cập vào ngữ cảnh phạm vi cơ sở dữ liệu 
@@ -17,7 +19,6 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
             // Đưa người dùng từ cơ sở dữ liệu vào 1 danh sách
@@ -26,7 +27,6 @@ namespace API.Controllers
             return await users;
         }
 
-        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<AppUser>> GetUser(int id)
         {
