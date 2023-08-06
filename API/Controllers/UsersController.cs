@@ -28,18 +28,15 @@ namespace API.Controllers
         {
             // Đưa người dùng từ cơ sở dữ liệu vào 1 danh sách
             // để sử dụng 2 danh sách, cần đưa vào 1 khung, lớp hoặc 1 không gian tên khác và gọi Tolisst()
-            var users = await _userRepository.GetUsersAsync();
-
-            // Thiết lập bản đồ của dối tượng users
-            var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
-            return Ok(usersToReturn);
+            var users = await _userRepository.GetMembersAsync();
+            return Ok(users);
         }
 
         [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            var user = await _userRepository.GetUserByUsernameAsync(username);
-            return _mapper.Map<MemberDto>(user);
+            var user = await _userRepository.GetMemberAsync(username);
+            return user;
         }
     }
 }
