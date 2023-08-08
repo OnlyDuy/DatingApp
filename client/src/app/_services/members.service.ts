@@ -11,27 +11,11 @@ export class MembersService {
 
   constructor(private http: HttpClient) { }
 
-  getHttpOptions() {
-    const userToken = localStorage.getItem('user');
-    if (userToken !== null) {
-      return {
-        headers: new HttpHeaders({
-          Authorization: 'Bearer ' + JSON.parse(userToken)?.token
-        })
-      };
-    } else {
-      // Xử lý trường hợp không có thông tin user trong localStorage.
-      return {};
-    }
-  }
-
   getMembers() {
-    const httpOptions = this.getHttpOptions();
-    return this.http.get<Member[]>(this.baseUrl + 'users', httpOptions);
+    return this.http.get<Member[]>(this.baseUrl + 'users');
   }
 
   getMember(username: string) {
-    const httpOptions = this.getHttpOptions();
-    return this.http.get<Member>(this.baseUrl + 'users/' + username, httpOptions);
+    return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
 }
