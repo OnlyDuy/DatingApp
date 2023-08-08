@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TestErrorsComponent implements OnInit {
 
-  baseUrl: string = 'https://localhost:7049/api/';
+  baseUrl: string = 'http://localhost:5009/api/';
   validationErrors: string[] = [];
 
   constructor(private http: HttpClient) {}
