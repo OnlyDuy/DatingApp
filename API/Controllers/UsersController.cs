@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
 using API.Entites;
@@ -6,6 +9,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -37,6 +41,23 @@ namespace API.Controllers
         {
             var user = await _userRepository.GetMemberAsync(username);
             return user;
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
+        {   
+            // Lấy tên người dùng trong trường hợp cập nhật
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+
+            // Đang cập nhật hoặc sự dụng điều này để cập nhật 1 đối tượng thì có thể dùng Map()
+            _mapper.Map(memberUpdateDto, user);
+
+            _userRepository.Update(user);
+
+            if (await _userRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Failed to update user");
         }
     }
 }

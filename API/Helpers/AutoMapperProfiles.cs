@@ -1,4 +1,5 @@
 
+// ĐÂY LÀ HỒ SƠ TỰ ĐỘNG
 // Giúp chúng ta lặp bản dồ từ đối tượng này sang đối tượng khác
 // Ánh xạ từ đối tượng này sang đối tượng khác
 using API.DTOs;
@@ -18,6 +19,7 @@ namespace API.Helpers
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => 
                     src.DateOfBirth.CalculateAge()));
             CreateMap<Photo, PhotoDto>();
+            CreateMap<MemberUpdateDto, AppUser>();
         }
     }
 }
