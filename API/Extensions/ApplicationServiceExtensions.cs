@@ -10,6 +10,9 @@ namespace API.Extensions
     {
         public static IServiceCollection AddApplicationService(this IServiceCollection services, IConfiguration config)
         {
+            // Configuring cloudinary in the API
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+            
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
