@@ -82,7 +82,6 @@ namespace API.Controllers
                 PublicId = result.PublicId
             };
 
-
             // Kiểm tra liệu người dùng có bất kỳ bức ảnh nào vào lúc này hay không
             if (user.Photos.Count == 0)
             {
@@ -101,6 +100,29 @@ namespace API.Controllers
             }
             
             return BadRequest("Problem adding photo");
+        }
+
+        // Controller thiêt slaapj làm ảnh chính cho người dùng
+        [HttpPut("set-main-photo/{photoId}")]
+        public async Task<ActionResult> SetMainPhoto(int photoId)
+        {
+            // Lấy người dùng theo tên
+            var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+            // Lấy ra hình ảnh của người dùng theo Id
+            var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+            // Kiểm tra bức ảnh lấy ra có phải là ảnh chính hay không
+            if (photo.IsMain) return BadRequest("This is already your main photo");
+
+            // Lấy ảnh chính hiện tại
+            var currentMain = user.Photos.FirstOrDefault(x => x.IsMain);
+            // Kiển tra có null hay không
+            if (currentMain != null) currentMain.IsMain = false;
+            photo.IsMain = true;
+
+            // Lưu các thay đổi và trở lại kho lưu trữ
+            if (await _userRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Failed to set main photo");
         }
 
     }
