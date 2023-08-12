@@ -4,5 +4,6 @@ namespace API.DTOs
     {
         public string Username { get; set; } = default!;
         public string Token { get; set; } = default!;
+        public string PhotoUrl { get; set; } = default!;
     }
 }
