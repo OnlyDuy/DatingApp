@@ -2,8 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { take } from 'rxjs';
 import { Member } from 'src/app/_models/member';
+import { Photo } from 'src/app/_models/photo';
 import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
+import { MembersService } from 'src/app/_services/members.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -16,9 +18,9 @@ export class PhotoEditorComponent implements OnInit{
   uploader!: FileUploader;
   hasBaseDropzoneOver = false;
   baseUrl = environment.apiUrl;
-  user!: User | null;
+  user?: User | null;
 
-  constructor(private accountService: AccountService) {
+  constructor(private accountService: AccountService, private memberService: MembersService) {
     // điều này sẽ cho phep truy cập vào người dùn hiện tại
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
   }
@@ -31,6 +33,20 @@ export class PhotoEditorComponent implements OnInit{
   fileOverBase(e: any) {
     this.hasBaseDropzoneOver = e;
   }
+
+  setMainPhoto(photo: Photo) {
+    this.memberService.setMainPhoto(photo.id).subscribe(() => {
+      this.user!.photoUrl = photo.url;
+      this.accountService.setCurrentUser(this.user!);
+      this.member.photoUrl = photo.url;
+      // duyệt qua từng ảnh của người dùng và thiết lập ảnh chính thành false
+      this.member.photos.forEach(p => {
+        if (p.isMain) p.isMain = false;
+        // và lấy 1 ảnh còn lại đặt làm true
+        if (p.id === photo.id) p.isMain = true;
+      })
+    })
+  } 
 
   initializeUploader() {
     this.uploader = new FileUploader({
