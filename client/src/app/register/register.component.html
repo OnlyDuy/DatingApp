@@ -2,12 +2,25 @@
     <h2 class="text-center text-primary">Sign up</h2>
     <hr>
     <!-- [(ngModel)], bạn đang tạo một liên kết hai chiều giữa dữ liệu -->
-    <app-text-input [formControl]='registerForm.controls["username"]' 
-        [label]='"Username"'></app-text-input>
-    <app-text-input [formControl]='registerForm.controls["password"]' 
-        [label]='"Password"' [type]='"password"'></app-text-input>
-    <app-text-input [formControl]='registerForm.controls["confirmPassword"]' 
-        [label]='"Confirm Password"' [type]='"password"'></app-text-input>
+
+    <div class="form-group mb-3">
+        <label class="control-label" style="margin-right: 10px;">I am a: </label>
+        <label class="radio-inline">
+            <input type="radio" value="male" formControlName = "gender"> Male
+        </label>
+        <label class="radio-inline">
+            <input type="radio" value="female" formControlName = "gender" style="margin-left: 30px;"> Female
+        </label>
+    </div>
+    <app-text-input [formControl]='registerForm.controls["username"]' [label]='"Username"'></app-text-input>
+    <app-text-input [formControl]='registerForm.controls["knownAs"]' [label]='"Known As"'></app-text-input>
+    <app-text-input [formControl]='registerForm.controls["dateOfBirth"]' [label]='"Date Of  Birth"'></app-text-input>
+    <app-text-input [formControl]='registerForm.controls["city"]' [label]='"City"'></app-text-input>
+    <app-text-input [formControl]='registerForm.controls["country"]' [label]='"Country"'></app-text-input>
+    <app-text-input [formControl]='registerForm.controls["password"]' [label]='"Password"'
+        [type]='"password"'></app-text-input>
+    <app-text-input [formControl]='registerForm.controls["confirmPassword"]' [label]='"Confirm Password"'
+        [type]='"password"'></app-text-input>
     <div class="form-group text-center">
         <button class="btn btn-success m-lg-3" type="submit">Register</button>
         <button class="btn btn-secondary" (click)="cancel()" type="button">Cancel</button>
