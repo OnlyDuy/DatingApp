@@ -2,6 +2,7 @@
 // Đây là kho lưu trữ dữ liệu
 using API.DTOs;
 using API.Entites;
+using API.Helpers;
 using API.interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -27,11 +28,14 @@ namespace API.Data
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<MemberDto>> GetMembersAsync()
+        public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
-            return await _context.Users 
+            var query = _context.Users 
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                // Chỉ định không theo dõi
+                .AsNoTracking();
+
+            return await PagedList<MemberDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)

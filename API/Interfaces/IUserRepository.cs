@@ -1,6 +1,7 @@
 // Đây là kho lưu trữ interface
 using API.DTOs;
 using API.Entites;
+using API.Helpers;
 
 namespace API.interfaces
 {
@@ -16,7 +17,7 @@ namespace API.interfaces
         // Thêm 2 phương thức mới
 
         // Trả về các thành viên
-        Task<IEnumerable<MemberDto>> GetMembersAsync();
+        Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams);
         // Trả về 1 thành viên
         Task<MemberDto> GetMemberAsync(string username);
     }
