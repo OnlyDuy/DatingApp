@@ -35,6 +35,13 @@ namespace API.Controllers
         // [FromQuery]: Thuộc tính lấy các tham số người dùng từ chuỗi truy vấn
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
+            // Phân trang tùy chọn theo giới tính người dùng
+            var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+            userParams.CurrentUsername = user.UserName;
+
+            if (string.IsNullOrEmpty(userParams.Gender))
+                userParams.Gender = user.Gender == "male" ? "female" : "male";
+
             // Đưa người dùng từ cơ sở dữ liệu vào 1 danh sách
             // để sử dụng 2 danh sách, cần đưa vào 1 khung, lớp hoặc 1 không gian tên khác và gọi Tolisst()
             var users = await _userRepository.GetMembersAsync(userParams);
