@@ -40,6 +40,15 @@ namespace API.Data
 
             query = query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
 
+            // kiểm tra xem liệu có người dùng trước hay không
+            query = userParams.OrderBy switch
+            {   
+                // Đây là trường hợp được tạo
+                "create" => query.OrderByDescending(u => u.Created),
+                // Đây là trường hợp mặc định
+                _ => query.OrderByDescending(u => u.LastActive)
+            };
+
             return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(_mapper
                 .ConfigurationProvider).AsNoTracking(),
                 userParams.PageNumber, userParams.PageSize);
