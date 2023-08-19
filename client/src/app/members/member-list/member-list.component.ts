@@ -19,12 +19,9 @@ export class MemberListComponent implements OnInit{
   user: User;
   genderList = [{value: 'male', display: 'Males'}, {value: 'female', display: 'Females'}];
 
-  constructor(private memberService: MembersService, private accountService: AccountService) {
+  constructor(private memberService: MembersService) {
     // Người dùng hiện tại của AccountService sẽ sử dụng đường dẫn ở đây
-    this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
-      this.user = user;
-      this.userParams = new UserParams(user);
-    })
+    this.userParams = this.memberService.getUserParams();
   }
 
   ngOnInit(): void {
@@ -32,6 +29,7 @@ export class MemberListComponent implements OnInit{
   }
 
   loadMembers() {
+    this.memberService.setUserParams(this.userParams);
     this.memberService.getMembers(this.userParams).subscribe(response => {
       this.members = response.result;
       this.pagination = response.pagination;
@@ -39,12 +37,13 @@ export class MemberListComponent implements OnInit{
   }
 
   resetFilters() {
-    this.userParams = new UserParams(this.user);
+    this.userParams = this.memberService.resetUserParams();
     this.loadMembers();
   }
 
   pageChanged(event: any) {
     this.userParams.pageNumber = event.page;
+    this.memberService.setUserParams(this.userParams);
     this.loadMembers();
   }
 }
