@@ -14,11 +14,11 @@ namespace API.Helpers
             if (!resultContext.HttpContext.User.Identity.IsAuthenticated) return;
             
             // nếu được xác thực thì cập nhật thuộc tính hoạt động cuối cùng đó
-            var username = resultContext.HttpContext.User.GetUsername();
+            var userId = resultContext.HttpContext.User.GetUserId();
             // truy cập vào kho lưu trữ
             var repo = resultContext.HttpContext.RequestServices.GetService<IUserRepository>();
             // Lưu lại người dùng
-            var user = await repo.GetUserByUsernameAsync(username);
+            var user = await repo.GetUserByIdAsync(userId);
             user.LastActive = DateTime.Now;
             await repo.SaveAllAsync();
         }
