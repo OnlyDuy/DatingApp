@@ -21,7 +21,7 @@ namespace API.Data
             return await _context.Likes.FindAsync(sourceUserId, likedUserId);
         }
         // Nhận được lượt thích của người dùng
-        public async Task<PagedList<LikeDto>> GetUserLikes(string predicate, int userId)
+        public async Task<IEnumerable<LikeDto>> GetUserLikes(string predicate, int userId)
         {
             var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
             var likes = _context.Likes.AsQueryable();
@@ -38,7 +38,7 @@ namespace API.Data
                 users = likes.Select(like => like.SourceUser);
             }
 
-            return (PagedList<LikeDto>)await users.Select(user => new LikeDto
+            var likeUsers = await users.Select(user => new LikeDto
             {
                 Username = user.UserName,
                 KnownAs = user.KnownAs,
@@ -47,6 +47,8 @@ namespace API.Data
                 City = user.City,
                 Id = user.Id,
             }).ToListAsync();
+            
+            return likeUsers;
         }
 
         // Nhận người dùng với lượt thích
