@@ -96,8 +96,10 @@ export class MembersService {
   }
   
   // Nhận lượt thích
-  getLikes(predicate: string) {
-    return this.http.get<Partial<Member[]>>(this.baseUrl + 'likes?predicate=' + predicate);
+  getLikes(predicate: string, pageNumber, pageSize) {
+    let params = this.getPaginationHeaders(pageNumber, pageSize);
+    params = params.append('predicate', predicate);
+    return this.getPaginatedResult<Partial<Member[]>>(this.baseUrl + 'likes', params);
   }
 
   private getPaginatedResult<T>(url, params) {
