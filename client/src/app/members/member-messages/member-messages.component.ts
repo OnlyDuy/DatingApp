@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Message } from 'src/app/_models/message';
 import { MessageService } from 'src/app/_services/message.service';
 
@@ -9,11 +10,21 @@ import { MessageService } from 'src/app/_services/message.service';
 })
 export class MemberMessagesComponent implements OnInit {
 
+  @ViewChild('messageForm') messageForm: NgForm;
   @Input() messages: Message[];
-
-  constructor() {}
+  @Input() username: string;
+  messageContent: string;
+  
+  constructor(private messageService: MessageService) { }
 
   ngOnInit(): void {
   }
 
+  sendMessage() {
+    this.messageService.sendMessage(this.username, this.messageContent).subscribe(message => {
+      // Đẩy tin nhắn đã tạo
+      this.messages.push(message);
+      this.messageForm.reset;
+    })
+  }
 }
