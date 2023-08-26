@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
+import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { reduce } from 'rxjs';
 import { Member } from 'src/app/_models/member';
+import { Message } from 'src/app/_models/message';
 import { MembersService } from 'src/app/_services/members.service';
+import { MessageService } from 'src/app/_services/message.service';
 
 @Component({
   selector: 'app-member-detail',
@@ -11,11 +14,15 @@ import { MembersService } from 'src/app/_services/members.service';
   styleUrls: ['./member-detail.component.css']
 })
 export class MemberDetailComponent implements OnInit{
-  member!: Member;
+  @ViewChild('memberTabs') memberTabs: TabsetComponent;
+  member: Member;
   galleryOptions!: NgxGalleryOptions[];
   galleryImages!: NgxGalleryImage[];
+  activeTab: TabDirective;
+  messages: Message[] = [];
 
-  constructor(private memberService: MembersService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private memberService: MembersService, private route: ActivatedRoute, private router: Router,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     const username = this.route.snapshot.paramMap.get('username');
@@ -56,5 +63,20 @@ export class MemberDetailComponent implements OnInit{
       this.member = member;
       this.galleryImages = this.getImages();
     })
+  }
+
+  loadMessages() {
+    this.messageService.getMessageThread(this.member.username).subscribe(message => {
+      this.messages = message;
+    })
+  }
+
+  // Tạo 1 phương thức đã kích hoạt để nhận dữ liệu
+  onTabActivated(data: TabDirective) {
+    this.activeTab = data;
+    // truy cập đúng tiêu đề tin nhắn
+    if (this.activeTab.heading === 'Messages' && this.messages.length === 0) {
+      this.loadMessages();
+    }
   }
 }
