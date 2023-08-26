@@ -14,10 +14,10 @@ import { MessageService } from 'src/app/_services/message.service';
   styleUrls: ['./member-detail.component.css']
 })
 export class MemberDetailComponent implements OnInit{
-  @ViewChild('memberTabs') memberTabs: TabsetComponent;
+  @ViewChild('memberTabs', {static: true}) memberTabs: TabsetComponent;
   member: Member;
-  galleryOptions!: NgxGalleryOptions[];
-  galleryImages!: NgxGalleryImage[];
+  galleryOptions: NgxGalleryOptions[];
+  galleryImages: NgxGalleryImage[];
   activeTab: TabDirective;
   messages: Message[] = [];
 
@@ -25,13 +25,14 @@ export class MemberDetailComponent implements OnInit{
     private messageService: MessageService) { }
 
   ngOnInit(): void {
-    const username = this.route.snapshot.paramMap.get('username');
-    if (username) {
-      this.loadMember(username);
-    } else {
-      // Xử lý khi không có giá trị username
-      this.router.navigate(['/not-found']);
-    }
+
+    this.route.data.subscribe(data => {
+      this.member = data['member'];
+    })
+
+    this.route.queryParams.subscribe(params => {
+      params['tab'] ? this.selectTab(params['tab']) : this.selectTab(0);
+    })
 
     this.galleryOptions = [
       {
@@ -43,6 +44,8 @@ export class MemberDetailComponent implements OnInit{
         preview: false,
       }
     ]
+
+    this.galleryImages = this.getImages();
   }
 
   getImages(): NgxGalleryImage[] {
@@ -58,17 +61,14 @@ export class MemberDetailComponent implements OnInit{
     return imageUrls;
   }
 
-  loadMember(username: string) {
-    this.memberService.getMember(username).subscribe(member => {
-      this.member = member;
-      this.galleryImages = this.getImages();
+  loadMessages() {
+    this.messageService.getMessageThread(this.member?.username).subscribe(message => {
+      this.messages = message;
     })
   }
 
-  loadMessages() {
-    this.messageService.getMessageThread(this.member.username).subscribe(message => {
-      this.messages = message;
-    })
+  selectTab(tabId: number) {
+    this.memberTabs.tabs[tabId].active = true;
   }
 
   // Tạo 1 phương thức đã kích hoạt để nhận dữ liệu

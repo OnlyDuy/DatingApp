@@ -11,6 +11,7 @@ import { NotFoundComponent } from "./errors/not-found/not-found.component";
 import { ServerErrorComponent } from "./errors/server-error/server-error.component";
 import { MemberEditComponent } from "./members/member-edit/member-edit.component";
 import { PreventUnsavedChangesGuard } from "./_guards/prevent-unsaved-changes.guard";
+import { MemberDetailedResolver } from "./_resolvers/member-detailed.resolver";
 
 const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -20,7 +21,8 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             {path: 'members', component: MemberListComponent},
-            {path: 'members/:username', component: MemberDetailComponent},
+            // Thêm trình phân giải chi tiết thành viên với key là member
+            {path: 'members/:username', component: MemberDetailComponent, resolve: {member: MemberDetailedResolver}},
             // Trong thành phần chỉnh sửa có thể hủy kích hoạt và co thể
             // chỉ định trình bảo vệ ngăn chặn cấc thay đổi không an toàn
             {path: 'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard]},
