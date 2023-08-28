@@ -32,6 +32,14 @@ export class MessagesComponent implements OnInit {
     })
   }
 
+  // splice: Loại bỏ các phần tử khỏi một mảng và nếu cần, 
+    // chèn các phần tử mới vào vị trí của chúng, trả về các phần tử đã xóa.
+  deleteMessage(id: number) {
+    this.messageService.deleteMessage(id).subscribe(() => {
+      this.messages.splice(this.messages.findIndex(m => m.id === id), 1);
+    })
+  }
+
   pageChanged(event: any) {
     this.pageNumber = event.page;
     this.loadMessages();
