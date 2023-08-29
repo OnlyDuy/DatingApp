@@ -4,8 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using API.Entites;
-
+using API.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -21,11 +20,11 @@ namespace API.Data
             if (users == null) return;
             foreach (var user in users)
             {
-                using var hmac = new HMACSHA512();
+                // using var hmac = new HMACSHA512();
 
                 user.UserName = user.UserName.ToLower();
-                user.PasswordSalt = hmac.Key;
-                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Pa$$w0rd"));
+                // user.PasswordSalt = hmac.Key;
+                // user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Pa$$w0rd"));
 
                 await context.Users.AddAsync(user);
             }
