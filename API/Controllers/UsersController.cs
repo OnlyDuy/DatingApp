@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
-using API.Entites;
+using API.Entities;
 using API.interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;

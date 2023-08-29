@@ -1,7 +1,7 @@
 
 // Đây là kho lưu trữ dữ liệu
 using API.DTOs;
-using API.Entites;
+using API.Entities;
 using API.Helpers;
 using API.interfaces;
 using AutoMapper;

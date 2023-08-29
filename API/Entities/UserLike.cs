@@ -1,4 +1,4 @@
-using API.Entites;
+using API.Entities;
 
 namespace API.Entities
 {

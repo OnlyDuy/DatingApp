@@ -1,6 +1,6 @@
 // Đây là kho lưu trữ interface
 using API.DTOs;
-using API.Entites;
+using API.Entities;
 using API.Helpers;
 
 namespace API.interfaces
