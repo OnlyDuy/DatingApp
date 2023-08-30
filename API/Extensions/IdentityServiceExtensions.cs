@@ -34,6 +34,13 @@ namespace API.Extensions
                         ValidateAudience = false,
                     };
                 });
+
+            // Thêm tiện ích dịch vụ chính sách
+            services.AddAuthorization(opt => 
+            {
+                opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+                opt.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
+            });
             
             return services;
         }
