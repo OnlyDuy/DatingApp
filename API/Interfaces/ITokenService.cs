@@ -1,4 +1,3 @@
-
 using API.Entities;
 
 namespace API.interfaces
@@ -7,6 +6,6 @@ namespace API.interfaces
     // Chỉ chứa tên của chức năng mà giao diện cung cấp
     public interface ITokenService
     {
-        string CreateToken(AppUser user);
+        Task<string> CreateToken(AppUser user);
     }
 }
