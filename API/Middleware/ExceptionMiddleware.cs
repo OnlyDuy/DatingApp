@@ -18,6 +18,7 @@ namespace API.Middleware
             _env = env;
         }
 
+        //Tác vụ gọi không đồng bộ
         public async Task InvokeAsync(HttpContext context)
         {
             try

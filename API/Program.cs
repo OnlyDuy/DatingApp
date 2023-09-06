@@ -1,4 +1,4 @@
-
+// FILE CHỨA HÀM MAIN CỦA ỨNG DỤNG
 using API.Data;
 using API.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +11,8 @@ namespace API
     {
         public static async Task Main(string[] args)
         {
+            // Khởi tạo ứng dụng
+            // khởi tạo đối tượng CreateHostBuilder để tạo máy chủ web -> lắng nghe yêu cầu http
             var host = CreateHostBuilder(args).Build();
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;

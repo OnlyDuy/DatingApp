@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace API.Services
 {
+    // Nó sẽ triển khai Giao diện dịch vụ mã thông báo
     public class TokenService : ITokenService
     {
         private readonly SymmetricSecurityKey _key;

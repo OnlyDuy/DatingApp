@@ -2,6 +2,8 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// Cấu hình cho môi trường phát triển
+
 export const environment = {
     production: false,
     apiUrl: "http://localhost:5009/api/"

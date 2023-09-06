@@ -26,6 +26,7 @@ namespace API.Controllers
         }
 
         [HttpPost("register")]
+        // Được gắn với các địa chỉ URL cụ thể (action methods).
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             // Kiểm tra xem có tên người dùng phù hợp trong csdl của mình hay không trước khi đăng ký
@@ -43,7 +44,7 @@ namespace API.Controllers
             // Đưa người dùng mới đăng ký nào vào đều là thành viên
             var roleResult = await _userManager.AddToRoleAsync(user, "Member");
 
-            if (!result.Succeeded) return BadRequest(result.Errors);
+            if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
             return new UserDto
             {

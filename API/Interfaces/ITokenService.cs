@@ -6,6 +6,7 @@ namespace API.interfaces
     // Chỉ chứa tên của chức năng mà giao diện cung cấp
     public interface ITokenService
     {
+        // Tạo mã thông báo
         Task<string> CreateToken(AppUser user);
     }
 }

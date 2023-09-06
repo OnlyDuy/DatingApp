@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { User } from './_models/user';
 import { AccountService } from './_services/account.service';
 
+// Đây là phần lộ trình ứng dụng của chúng ta
+
 // Thành phần của Angular 
 @Component({
   selector: 'app-root',

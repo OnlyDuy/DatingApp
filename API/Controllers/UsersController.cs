@@ -16,7 +16,6 @@ using API.Helpers;
 namespace API.Controllers
 {
     [Authorize]
-    // Ủy quyền
     public class UsersController : BaseApiController
     {
         // Sử dụng dấu gạch dưới để có quyền truy cập vào ngữ cảnh phạm vi cơ sở dữ liệu 

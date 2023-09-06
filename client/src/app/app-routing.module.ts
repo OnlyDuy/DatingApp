@@ -15,6 +15,8 @@ import { MemberDetailedResolver } from "./_resolvers/member-detailed.resolver";
 import { AdminPanelComponent } from "./admin/admin-panel/admin-panel.component";
 import { AdminGuard } from "./_guards/admin.guard";
 
+// Tệp cấu hình định tuyến ứng dụng
+
 const routes: Routes = [
     {path: '', component: HomeComponent},
     {
