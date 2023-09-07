@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from './_models/user';
 import { AccountService } from './_services/account.service';
+import { PresenceService } from './_services/presence.service';
 
 // Đây là phần lộ trình ứng dụng của chúng ta
 
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit {
   title = 'The Dating App';
   users: any;
 
-  constructor(private http: HttpClient, private accountService: AccountService ) { }
+  constructor(private accountService: AccountService, private presence: PresenceService ) { }
 
   ngOnInit() {
     this.setCurrentUser();
@@ -30,8 +31,15 @@ export class AppComponent implements OnInit {
     const userString: string | null = localStorage.getItem('user');
     if (userString !== null) {
       const user: User = JSON.parse(userString);
-      // Thiết lập đối tượng đã lấy trong tài khoản của mình
-      this.accountService.setCurrentUser(user);
+      // kiểm tra thực sự có người dùng hay không
+      // để lấy vào SignR
+      if (user) {
+        // Thiết lập đối tượng đã lấy trong tài khoản của mình
+        this.accountService.setCurrentUser(user);
+        // tạo kết nối trung tâm và truyền đối tượng user
+        // để khi tạo nó, có thể có quyền truy cập vào mã thông báo jwt của người dùng
+        this.presence.createHubConnection(user);
+      }
     }
   }
 }
