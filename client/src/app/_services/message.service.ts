@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Message } from '../_models/message';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { User } from '../_models/user';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +15,35 @@ import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 export class MessageService {
 
   baseUrl = environment.apiUrl;
+  hubUrl = environment.hubUrl;
+  private hubConnection: HubConnection;
+  // tạo thuộc tính luồng tin nhắn, BehaviorSubject là đói tượng hành vi
+  private messageThreadSource = new BehaviorSubject<Message[]>([]);
+  messageThreads = this.messageThreadSource.asObservable();
 
   constructor(private http: HttpClient) { }
+
+  // Tạo kết nối trung tâm
+  createHubConnection(user: User, otherUsername: string) {
+    this.hubConnection = new HubConnectionBuilder() 
+      .withUrl(this.hubUrl + 'message?user=' + otherUsername, {
+        // lấy mã thông báo truy cập
+        accessTokenFactory: () => user.token
+      })
+      .withAutomaticReconnect()
+      .build()
+    
+    this.hubConnection.start().catch(error => console.log(error));
+
+    this.hubConnection.on('ReceiveMessageThread', messages => {
+      this.messageThreadSource.next(messages);
+    })
+  }
+
+  // Dừng kết nối trung tâm
+  stopHubConnection() {
+    this.hubConnection.stop();
+  }
 
   // phương thức nhận tin nhắn
   getMessages(pageNumber, pageSize, container) {
