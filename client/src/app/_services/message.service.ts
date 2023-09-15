@@ -19,7 +19,7 @@ export class MessageService {
   private hubConnection: HubConnection;
   // tạo thuộc tính luồng tin nhắn, BehaviorSubject là đói tượng hành vi
   private messageThreadSource = new BehaviorSubject<Message[]>([]);
-  messageThreads = this.messageThreadSource.asObservable();
+  messageThread$ = this.messageThreadSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -42,7 +42,10 @@ export class MessageService {
 
   // Dừng kết nối trung tâm
   stopHubConnection() {
-    this.hubConnection.stop();
+    // chỉ thực sự tồn tại kết nối trung tâm thì mới dừng
+    if (this.hubConnection) {
+      this.hubConnection.stop();
+    }
   }
 
   // phương thức nhận tin nhắn

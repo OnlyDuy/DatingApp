@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
-import { reduce } from 'rxjs';
+import { reduce, take } from 'rxjs';
 import { Member } from 'src/app/_models/member';
 import { Message } from 'src/app/_models/message';
+import { User } from 'src/app/_models/user';
+import { AccountService } from 'src/app/_services/account.service';
 import { MembersService } from 'src/app/_services/members.service';
 import { MessageService } from 'src/app/_services/message.service';
 import { PresenceService } from 'src/app/_services/presence.service';
@@ -14,16 +16,20 @@ import { PresenceService } from 'src/app/_services/presence.service';
   templateUrl: './member-detail.component.html',
   styleUrls: ['./member-detail.component.css']
 })
-export class MemberDetailComponent implements OnInit{
+export class MemberDetailComponent implements OnInit, OnDestroy{
   @ViewChild('memberTabs', {static: true}) memberTabs: TabsetComponent;
   member: Member;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
   activeTab: TabDirective;
   messages: Message[] = [];
+  user: User;
 
   constructor(public presence: PresenceService, private route: ActivatedRoute, private router: Router,
-    private messageService: MessageService) { }
+    private messageService: MessageService, private accountService: AccountService) 
+    {
+      this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
+    }
 
   ngOnInit(): void {
 
@@ -64,7 +70,7 @@ export class MemberDetailComponent implements OnInit{
 
   loadMessages() {
     this.messageService.getMessageThread(this.member?.username).subscribe(message => {
-      this.messages = message;
+        this.messages = message;
     })
   }
 
@@ -77,7 +83,13 @@ export class MemberDetailComponent implements OnInit{
     this.activeTab = data;
     // truy cập đúng tiêu đề tin nhắn
     if (this.activeTab.heading === 'Messages' && this.messages.length === 0) {
-      this.loadMessages();
+      this.messageService.createHubConnection(this.user, this.member.username);
+    } else {
+      this.messageService.stopHubConnection();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.messageService.stopHubConnection();
   }
 }
