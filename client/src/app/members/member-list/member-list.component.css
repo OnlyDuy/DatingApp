@@ -1,6 +1,13 @@
 .label-filters {
     line-height: 34px;
     padding-right: 5px;
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 10px;
+}
+
+.input_filters {
+  width: 86px;
 }
 
 .btn_Filter {

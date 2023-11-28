@@ -29,6 +29,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy{
     private messageService: MessageService, private accountService: AccountService) 
     {
       this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
+      
     }
 
   ngOnInit(): void {

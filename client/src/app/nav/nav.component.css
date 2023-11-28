@@ -6,4 +6,14 @@ img {
     max-height: 50px;
     border: 2px solid #fff;
     display: inline;
+    margin-right: 15px;
+}
+
+.dropdow_menu-location {
+  margin-top: 10px;
+  margin-left: 80px;
+}
+
+.dropdow_div-style {
+  margin: 0;
 }

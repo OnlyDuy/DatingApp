@@ -4,7 +4,7 @@
             No messages yet... say hi by using the message box below
         </div>
 
-        <ul *ngIf="(messageService.messageThread$ | async)?.length > 0" class="chat">
+        <ul *ngIf="(messageService.messageThread$ | async).length > 0" class="chat">
             <li *ngFor="let message of (messageService.messageThread$ | async)">
                 <div class="message-content">
                     <div class="chat-body">

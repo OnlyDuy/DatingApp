@@ -31,8 +31,8 @@ namespace API.SignalR
 
             // khi người dùng đã tham gia một nhóm
             // Lưu tin nhắn của người dùng
-            var messages = await _messageRepository
-                .GetMessageThread(Context.User.GetUsername(), otherUser);
+            var messages = await _messageRepository.
+                GetMessageThread(Context.User.GetUsername(), otherUser);
 
             await Clients.Group(groupName).SendAsync("ReceiveMessageThread", messages);
         }
