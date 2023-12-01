@@ -25,14 +25,14 @@ export class MessageService {
 
   // Tạo kết nối trung tâm
   createHubConnection(user: User, otherUsername: string) {
-    this.hubConnection = new HubConnectionBuilder() 
+    this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.hubUrl + 'message?user=' + otherUsername, {
         // lấy mã thông báo truy cập
         accessTokenFactory: () => user.token
       })
       .withAutomaticReconnect()
       .build()
-    
+
     this.hubConnection.start().catch(error => console.log(error));
 
     this.hubConnection.on('ReceiveMessageThread', messages => {
@@ -66,7 +66,7 @@ export class MessageService {
   }
 
   async sendMessage(username: string, content: string) {
-    return this.hubConnection.invoke('SendMessage', {recipientUsername: username, content})
+    return this.hubConnection?.invoke('SendMessage', {recipientUsername: username, content})
       .catch(error => console.log(error));
   }
 

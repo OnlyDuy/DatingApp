@@ -18,3 +18,7 @@
     display: inline-block;
     margin-bottom: 20px;
 }
+
+.tab__content {
+  margin-top: 20px;
+}

@@ -2,6 +2,7 @@ using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.interfaces;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
@@ -12,8 +13,9 @@ namespace API.SignalR
     {
         private readonly IMessageRepository _messageRepository;
         private readonly IMapper _mapper;
-        private readonly UserRepository _userRepository;
-        public MessageHub(IMessageRepository messageRepository, IMapper mapper, UserRepository userRepository)
+        // private readonly UserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
+        public MessageHub(IMessageRepository messageRepository, IMapper mapper, IUserRepository userRepository)
         {
             _mapper = mapper;
             _messageRepository = messageRepository;
@@ -25,7 +27,7 @@ namespace API.SignalR
             // khi tạo kết nối đến trung tâm này chúng ta sẽ chuyển tên người dùng khác
             // bằng khóa người dùng và nhận được thông tin như dưới 
             var HttpContext = Context.GetHttpContext();
-            var otherUser = HttpContext.Request.Query["User"].ToString();
+            var otherUser = HttpContext?.Request.Query["User"].ToString();
             var groupName = GetGroupName(Context.User.GetUsername(), otherUser);
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 

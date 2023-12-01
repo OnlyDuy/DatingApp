@@ -18,18 +18,21 @@ import { PresenceService } from 'src/app/_services/presence.service';
 })
 export class MemberDetailComponent implements OnInit, OnDestroy{
   @ViewChild('memberTabs', {static: true}) memberTabs: TabsetComponent;
-  member: Member;
-  galleryOptions: NgxGalleryOptions[];
-  galleryImages: NgxGalleryImage[];
+  member: Member = {} as Member;
+  galleryOptions: NgxGalleryOptions[] = []; //
+  galleryImages: NgxGalleryImage[] = [];
   activeTab: TabDirective;
   messages: Message[] = [];
   user: User;
 
   constructor(public presence: PresenceService, private route: ActivatedRoute, private router: Router,
-    private messageService: MessageService, private accountService: AccountService) 
+    private messageService: MessageService, private accountService: AccountService)
     {
-      this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
-      
+      this.accountService.currentUser$.pipe(take(1)).subscribe({
+        next: user => {
+          if (user) this.user = user;
+        }
+      });
     }
 
   ngOnInit(): void {
@@ -83,7 +86,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy{
   onTabActivated(data: TabDirective) {
     this.activeTab = data;
     // truy cập đúng tiêu đề tin nhắn
-    if (this.activeTab.heading === 'Messages' && this.messages.length === 0) {
+    if (this.activeTab.heading === 'Messages' && this.messages.length === 0 && this.user) {
       this.messageService.createHubConnection(this.user, this.member.username);
     } else {
       this.messageService.stopHubConnection();
