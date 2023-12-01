@@ -1,3 +1,4 @@
+
 using API.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -15,9 +16,11 @@ namespace API.Data
         }
 
         // Cấu hình lớp khơi rđộng này để có thể đưa DataContext vào các phân khác của ứng dụng
+        // Và giúp truy vấn csdl dễ dàng hơn
         public DbSet<UserLike> Likes { get; set; }
-
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Group> Groups {get; set;}
+        public DbSet<Connection> Connections {get; set;}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
